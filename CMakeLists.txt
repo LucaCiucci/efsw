@@ -11,10 +11,10 @@ include(GNUInstallDirs)
 
 find_package(Threads REQUIRED)
 
-option (VERBOSE "Build efsw with verbose mode.")
-option (LEGACY "Build efsw with cpp legacy support (before C++11).")
-option (BUILD_SHARED_LIBS "Build efsw as a shared library" ON)
-option (BUILD_TEST_APP "Build the test app" ${ESFW_MAIN_PROJECT})
+option (EFSW_VERBOSE "Build efsw with verbose mode.")
+option (EFSW_LEGACY "Build efsw with cpp legacy support (before C++11).")
+option (EFSW_BUILD_SHARED_LIBS "Build efsw as a shared library" ON)
+option (EFSW_BUILD_TEST_APP "Build the test app" ${ESFW_MAIN_PROJECT})
 option (EFSW_INSTALL "Add efsw install targets" ${ESFW_MAIN_PROJECT})
 
 add_library(efsw)
@@ -47,15 +47,15 @@ target_include_directories(efsw
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-if (VERBOSE)
+if (EFSW_VERBOSE)
 	target_compile_definitions(efsw PRIVATE EFSW_VERBOSE)
 endif()
-if (NOT LEGACY)
+if (NOT EFSW_LEGACY)
 	target_compile_features(efsw PRIVATE cxx_std_11)
 else ()
 	target_compile_definitions(efsw PRIVATE EFSW_LEGACY_CPP)
 endif()
-if (BUILD_SHARED_LIBS)
+if (EFSW_BUILD_SHARED_LIBS)
 	target_compile_definitions(efsw PRIVATE EFSW_DYNAMIC EFSW_EXPORTS)
 endif()
 
@@ -160,7 +160,7 @@ if(EFSW_INSTALL)
 	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/cmake/efswConfig.cmake DESTINATION "${packageDestDir}")
 endif()
 
-if (BUILD_TEST_APP)
+if (EFSW_BUILD_TEST_APP)
 	add_executable(efsw-test src/test/efsw-test.cpp)
 	target_link_libraries(efsw-test efsw)
 endif()
