@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
-project (efsw)
+project(efsw)
 
 set(ESFW_MAIN_PROJECT OFF)
 if ((CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR) AND (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME))
@@ -11,9 +11,9 @@ include(GNUInstallDirs)
 
 find_package(Threads REQUIRED)
 
-option (EFSW_VERBOSE "Build efsw with verbose mode.")
-option (EFSW_LEGACY "Build efsw with cpp legacy support (before C++11).")
-option (EFSW_BUILD_SHARED_LIBS "Build efsw as a shared library" ON)
+option (EFSW_VERBOSE "Build efsw with verbose mode." OFF)
+option (EFSW_LEGACY "Build efsw with cpp legacy support (before C++11)." OFF)
+option (EFSW_BUILD_SHARED_LIBS "Build efsw as a shared library" ${ESFW_MAIN_PROJECT})
 option (EFSW_BUILD_TEST_APP "Build the test app" ${ESFW_MAIN_PROJECT})
 option (EFSW_INSTALL "Add efsw install targets" ${ESFW_MAIN_PROJECT})
 
